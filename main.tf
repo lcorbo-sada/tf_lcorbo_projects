@@ -5,19 +5,28 @@ resource "google_folder" "lcorbo" {
 }
 
 resource "google_project" "smart" {
-  name       = "Lcorbo SMART Dev"
-  project_id = "lcorbo-smart-dev"
-  folder_id  = google_folder.lcorbo.name
+  name            = "Lcorbo SMART Dev"
+  project_id      = "lcorbo-smart-dev"
+  billing_account = "01C805-AC04C5-836F50"
+  folder_id       = google_folder.lcorbo.name
+
 }
 
-resource "google_project_service" "project" {
+resource "google_project_service" "cloudbuild" {
   project = google_project.smart.id
-  service = "iam.googleapis.com"
-
-  timeouts {
-    create = "30m"
-    update = "40m"
-  }
-
-  disable_dependent_services = true
+  service = "cloudbuild.googleapis.com"
 }
+
+resource "google_project_service" "artifactregistry" {
+  project = google_project.smart.id
+  service = "artifactregistry.googleapis.com"
+}
+
+resource "google_project_service" "cloudfunctions" {
+  project = google_project.smart.id
+  service = "cloudfunctions.googleapis.com"
+}
+
+
+
+#pubsub.googleapis.com
