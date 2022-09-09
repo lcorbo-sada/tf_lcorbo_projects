@@ -43,12 +43,3 @@ resource "google_storage_bucket" "bucket" {
   location                    = "US"
   uniform_bucket_level_access = true
 }
-
-
-output "project_id" { 
-  value = local.project_id
-}
-
-output "bucket" { 
-  value = google_storage_bucket.bucket.name
-}
