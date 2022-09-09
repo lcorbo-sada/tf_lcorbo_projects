@@ -27,6 +27,18 @@ resource "google_project_service" "cloudfunctions" {
   service = "cloudfunctions.googleapis.com"
 }
 
+resource "google_storage_bucket" "bucket" {
+  name     = "lcorbo-smart-test-090822"
+  project = "lcorbo-smart-dev"
+  location = "US"
+  uniform_bucket_level_access = true
+}
 
+data "archive_file" "lambda_my_function" {
+  type             = "zip"
+  source_dir      = "${path.module}/code/helloworld/"
+  output_file_mode = "0666"
+  output_path      = "${path.module}/bin/index.zip"
+}
 
 #pubsub.googleapis.com
